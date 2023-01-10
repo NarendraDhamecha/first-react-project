@@ -14,9 +14,9 @@ const App = (props) => {
   // };
 
   return (
-    <div>
+    <React.Fragment>
       <Form/>
-    </div>
+    </React.Fragment>
   );
 };
 

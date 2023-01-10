@@ -4,6 +4,7 @@ import "./Form.css";
 import Button from "../UI/Button";
 import UserList from "./UserList";
 import ErrorHandle from "./ErrorHandle";
+import Wrapper from "../Helpers/Wrapper";
 
 const Form = (props) => {
   const [enteredUserName, setUserName] = useState("");
@@ -22,13 +23,16 @@ const Form = (props) => {
   const submitEvent = (e) => {
     e.preventDefault();
     if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0) {
-      setValid({title: 'Invalid input', message: 'please enter valid input(non-empty-values)'});
+      setValid({
+        title: "Invalid input",
+        message: "please enter valid input(non-empty-values)",
+      });
       return;
     }
 
-    if(enteredAge <= 0){
-        setValid({title: 'Invalid age', message: 'please enter valid age'})
-        return
+    if (enteredAge <= 0) {
+      setValid({ title: "Invalid age", message: "please enter valid age" });
+      return;
     }
 
     updateList((prevList) => {
@@ -44,7 +48,7 @@ const Form = (props) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       {isValid && (
         <ErrorHandle
           onConfirm={errorButton}
@@ -72,7 +76,7 @@ const Form = (props) => {
         </form>
       </Card>
       <UserList users={list} />
-    </div>
+    </Wrapper>
   );
 };
 

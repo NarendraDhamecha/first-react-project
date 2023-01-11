@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Card from "../UI/Card";
 import "./Form.css";
 import Button from "../UI/Button";
@@ -7,22 +7,33 @@ import ErrorHandle from "./ErrorHandle";
 import Wrapper from "../Helpers/Wrapper";
 
 const Form = (props) => {
-  const [enteredUserName, setUserName] = useState("");
-  const [enteredAge, setAge] = useState("");
+  // const [enteredUserName, setUserName] = useState("");
+  // const [enteredAge, setAge] = useState("");
   const [list, updateList] = useState([]);
   const [isValid, setValid] = useState();
+  const enteredUserNameRef = useRef();
+  const enteredAgeRef = useRef();
+  const enteredCollegeRef = useRef();
 
-  const userNameEvent = (e) => {
-    setUserName(e.target.value);
-  };
+  // const userNameEvent = (e) => {
+  //   setUserName(e.target.value);
+  // };
 
-  const ageEvent = (e) => {
-    setAge(e.target.value);
-  };
+  // const ageEvent = (e) => {
+  //   setAge(e.target.value);
+  // };
 
   const submitEvent = (e) => {
     e.preventDefault();
-    if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0) {
+    const enteredUserName = enteredUserNameRef.current.value;
+    const enteredAge = enteredAgeRef.current.value;
+    const enteredCollege = enteredCollegeRef.current.value;
+
+    if (
+      enteredUserName.trim().length === 0 ||
+      enteredAge.trim().length === 0 ||
+      enteredCollege.trim().length === 0
+    ) {
       setValid({
         title: "Invalid input",
         message: "please enter valid input(non-empty-values)",
@@ -36,11 +47,14 @@ const Form = (props) => {
     }
 
     updateList((prevList) => {
-      return [...prevList, { name: enteredUserName, age: enteredAge }];
+      return [
+        ...prevList,
+        { name: enteredUserName, age: enteredAge, college: enteredCollege },
+      ];
     });
 
-    setUserName("");
-    setAge("");
+    // setUserName("");
+    // setAge("");
   };
 
   const errorButton = () => {
@@ -48,7 +62,7 @@ const Form = (props) => {
   };
 
   return (
-    <Wrapper>
+    <>
       {isValid && (
         <ErrorHandle
           onConfirm={errorButton}
@@ -59,24 +73,16 @@ const Form = (props) => {
       <Card className="input">
         <form onSubmit={submitEvent}>
           <label htmlFor="username">Username</label>
-          <input
-            value={enteredUserName}
-            onChange={userNameEvent}
-            type="text"
-            id="username"
-          ></input>
+          <input type="text" id="username" ref={enteredUserNameRef}></input>
           <label htmlFor="age">Age (Years)</label>
-          <input
-            value={enteredAge}
-            onChange={ageEvent}
-            type="number"
-            id="age"
-          ></input>
+          <input type="number" id="age" ref={enteredAgeRef}></input>
+          <label htmlFor="college">college</label>
+          <input type="text" id="college" ref={enteredCollegeRef}></input>
           <Button type="submit">Add user</Button>
         </form>
       </Card>
       <UserList users={list} />
-    </Wrapper>
+    </>
   );
 };
 

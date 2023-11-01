@@ -4,7 +4,6 @@ import "./Form.css";
 import Button from "../UI/Button";
 import UserList from "./UserList";
 import ErrorHandle from "./ErrorHandle";
-import Wrapper from "../Helpers/Wrapper";
 
 const Form = (props) => {
   // const [enteredUserName, setUserName] = useState("");
@@ -52,7 +51,10 @@ const Form = (props) => {
         { name: enteredUserName, age: enteredAge, college: enteredCollege },
       ];
     });
-
+    
+    document.getElementById('username').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('college').value = '';
     // setUserName("");
     // setAge("");
   };
@@ -76,7 +78,7 @@ const Form = (props) => {
           <input type="text" id="username" ref={enteredUserNameRef}></input>
           <label htmlFor="age">Age (Years)</label>
           <input type="number" id="age" ref={enteredAgeRef}></input>
-          <label htmlFor="college">college</label>
+          <label htmlFor="college">College Name</label>
           <input type="text" id="college" ref={enteredCollegeRef}></input>
           <Button type="submit">Add user</Button>
         </form>
